@@ -2,6 +2,8 @@ package com.blogappapi.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,16 +28,17 @@ public class UserController {
 	
 	
 	@PostMapping("/")
-	public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
+	public ResponseEntity<?> createUser(@Valid @RequestBody UserDto userDto){
 		
 		UserDto createUser=this.userServices.createUser(userDto);
-		
 		return new ResponseEntity<>(createUser,HttpStatus.CREATED);
+		
+		
 	}
 	
 	
 	@PutMapping("/updateUser/{userId}")
-	public ResponseEntity<?> updateUserById(@RequestBody UserDto userDto,@PathVariable int userId){
+	public ResponseEntity<?> updateUserById(@Valid @RequestBody UserDto userDto,@PathVariable int userId){
 		UserDto updateUser=this.userServices.updateUser(userDto, userId);
 		return new ResponseEntity<>(updateUser,HttpStatus.OK);
 	}
